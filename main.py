@@ -3,10 +3,12 @@ import logging
 from io import BytesIO
 
 from pyrogram import Client, filters
+from pyrogram.enums import ParseMode
 from pyrogram.types import Message
 
 from config import config
 from musicbot.ai import AIAssistant, AISettings
+from musicbot.games import bf_mode, chat_fight_score, couple_pick, gf_mode, pemoji
 from musicbot.player import MusicPlayer
 from musicbot.queue import queues
 
@@ -49,7 +51,8 @@ async def start_cmd(_: Client, msg: Message):
     await msg.reply_text(
         "🎵 **Music Bot Online**\n"
         "Music: /play /skip /pause /resume /end /queue\n"
-        "AI: /ai /summarize /imagine"
+        "AI: /ai /summarize /imagine\n"
+        "Fun: /gfmode /bfmode /couple /chatfight"
     )
 
 
@@ -66,7 +69,12 @@ async def help_cmd(_: Client, msg: Message):
         "**AI Commands**\n"
         "• `/ai <question>` - AI se answer\n"
         "• `/summarize` (reply to text) - message summary\n"
-        "• `/imagine <prompt>` - AI image generate"
+        "• `/imagine <prompt>` - AI image generate\n\n"
+        "**Fun / Games**\n"
+        "• `/gfmode [name]` - virtual GF mode\n"
+        "• `/bfmode [name]` - virtual BF mode\n"
+        "• `/couple` - random couple picker\n"
+        "• `/chatfight` or `/chatflight` - fight score"
     )
     await msg.reply_text(text)
 
@@ -202,6 +210,72 @@ async def imagine_cmd(_: Client, msg: Message):
     bio.name = "ai-image.png"
     await msg.reply_photo(photo=bio, caption=f"🖼 Prompt: `{prompt}`")
     await status.delete()
+
+
+@bot.on_message(cmd("gfmode") & filters.group)
+async def gfmode_cmd(_: Client, msg: Message):
+    name = " ".join(msg.command[1:]).strip() if len(msg.command) > 1 else (msg.from_user.first_name if msg.from_user else "baby")
+    result = gf_mode(name)
+    text = (
+        f"{pemoji('heart')} <b>{result.title}</b> {pemoji('spark')}\n"
+        f"👤 Target: <b>{name}</b>\n"
+        f"💞 Affection Meter: <b>{result.meter}%</b>\n"
+        f"💬 {result.line}"
+    )
+    await msg.reply_text(text, parse_mode=ParseMode.HTML)
+
+
+@bot.on_message(cmd("bfmode") & filters.group)
+async def bfmode_cmd(_: Client, msg: Message):
+    name = " ".join(msg.command[1:]).strip() if len(msg.command) > 1 else (msg.from_user.first_name if msg.from_user else "queen")
+    result = bf_mode(name)
+    text = (
+        f"{pemoji('fire')} <b>{result.title}</b> {pemoji('spark')}\n"
+        f"👤 Target: <b>{name}</b>\n"
+        f"💘 Protection Meter: <b>{result.meter}%</b>\n"
+        f"💬 {result.line}"
+    )
+    await msg.reply_text(text, parse_mode=ParseMode.HTML)
+
+
+@bot.on_message(cmd("couple") & filters.group)
+async def couple_cmd(client: Client, msg: Message):
+    users = []
+    async for member in client.get_chat_members(msg.chat.id, limit=200):
+        if member.user:
+            users.append(member.user)
+
+    pair = couple_pick(users)
+    if not pair:
+        return await msg.reply_text("Not enough human members for couple game.")
+
+    u1, u2 = pair
+    text = (
+        f"{pemoji('love')} <b>COUPLE OF THE DAY</b> {pemoji('love')}\n\n"
+        f"💑 {u1.mention} ❤️ {u2.mention}\n"
+        f"Compatibility: <b>{(hash(str(u1.id)+str(u2.id)) % 41) + 60}%</b>"
+    )
+    await msg.reply_text(text, parse_mode=ParseMode.HTML, disable_web_page_preview=True)
+
+
+@bot.on_message((cmd("chatfight") | cmd("chatflight")) & filters.group)
+async def chatfight_cmd(_: Client, msg: Message):
+    target = msg.reply_to_message.from_user if msg.reply_to_message and msg.reply_to_message.from_user else None
+    if not target:
+        return await msg.reply_text("Reply to someone and use /chatfight")
+
+    me = msg.from_user
+    score_a, score_b, line = chat_fight_score()
+    winner = me.mention if score_a >= score_b else target.mention
+
+    text = (
+        f"{pemoji('fire')} <b>CHAT FIGHT ARENA</b> {pemoji('fire')}\n\n"
+        f"🥊 {me.mention}: <b>{score_a}</b>\n"
+        f"🥊 {target.mention}: <b>{score_b}</b>\n\n"
+        f"🏆 Winner: {winner}\n"
+        f"📣 {line}"
+    )
+    await msg.reply_text(text, parse_mode=ParseMode.HTML)
 
 
 async def run() -> None:

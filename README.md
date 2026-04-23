@@ -16,6 +16,12 @@ Ye project ab **Music + AI super bot** hai:
 - `/summarize` — kisi replied text ka summary (Hinglish style)
 - `/imagine <prompt>` — AI image generate
 
+### Games / Fun
+- `/gfmode [name]` — GF vibe generator with premium emoji style
+- `/bfmode [name]` — BF vibe generator with premium emoji style
+- `/couple` — random couple of the day from group
+- `/chatfight` or `/chatflight` — score-based chat fight game
+
 ## 🔐 Required Env Vars
 Copy example:
 ```bash
