@@ -1,37 +1,76 @@
-# 𝗔𝗟𝗣𝗛𝗔 𝗦𝗣𝗔𝗠
-<h1 align="center"
- 
-### 🚩🚩 जय बजरंग बली 🚩🚩
-<h1 align="center"
-  
-<img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif">
-<img src="https://readme-typing-svg.herokuapp.com?color=FF0085&width=620&lines=🍁+🚩+𝗣𝗢𝗪𝗘𝗥𝗘𝗗+𝗕𝗬+𝗥𝗔𝗨𝗦𝗛𝗔𝗡+𝗞𝗜𝗡𝗚+𝗔𝗥𝗔+🚩+🍁"></b></h3>
-<img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif">
-<h1 align="center"><b>𝐓ᴇᴀᴍ 𝐏ᴜʀᴠɪ 𝐁ᴏᴛs</b></h1>
-<p align="center"><a href="https://ll_ALPHA_BABY_lll"><img src="https://files.catbox.moe/ikxjd1.jpg" width="500"></a></p>
-<img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif">
+# Telegram Music Bot + Advanced AI (Heroku Ready)
+
+Ye project ab **Music + AI super bot** hai:
+- Group VC music play/queue
+- AI QnA, summary, image generation
+- Heroku deploy ready setup
+
+## 🚀 Features
+### Music
+- `/play <name/url>` YouTube stream
+- `/skip`, `/pause`, `/resume`, `/end`
+- `/queue`, `/ping`, `/help`
+
+### Advanced AI
+- `/ai <question>` — smart chatbot answer
+- `/summarize` — kisi replied text ka summary (Hinglish style)
+- `/imagine <prompt>` — AI image generate
+
+### Games / Fun
+- `/gfmode [name]` — GF vibe generator with premium emoji style
+- `/bfmode [name]` — BF vibe generator with premium emoji style
+- `/couple` — random couple of the day from group
+- `/chatfight` or `/chatflight` — score-based chat fight game
+
+## 🔐 Required Env Vars
+Copy example:
+```bash
+cp .env.example .env
+```
+
+| Variable | Required | Description |
+|---|---|---|
+| `API_ID` | ✅ | Telegram API ID |
+| `API_HASH` | ✅ | Telegram API HASH |
+| `BOT_TOKEN` | ✅ | @BotFather bot token |
+| `STRING_SESSION` | ✅ | Assistant account Pyrogram string session |
+| `OPENAI_API_KEY` | ⚠️ for AI | OpenAI API key (AI commands ke liye required) |
+| `AI_MODEL` | ❌ | default `gpt-4.1-mini` |
+| `AI_IMAGE_MODEL` | ❌ | default `gpt-image-1` |
+| `SUDO_USERS` | ❌ | Space-separated user IDs |
+| `COMMAND_PREFIXES` | ❌ | Default `/ ! .` |
 
 
-<h3 align="center">
-    ─「 ᴅᴇᴩʟᴏʏ ᴏɴ ʜᴇʀᴏᴋᴜ 」─
-</h3>
+### AI key file me kaise daale
+`.env` file me directly ye line set karo:
+```env
+OPENAI_API_KEY=sk-your_openai_api_key_here
+```
 
-<p align="center"><a href="https://dashboard.heroku.com/new?template=https://github.com/TEAMPURVI/ALPHA_SPAM"> <img src="https://img.shields.io/badge/Deploy%20On%20Heroku-green?style=for-the-badge&logo=heroku" width="220" height="38.45"/></a></p>
+## 🧪 Local Run
+```bash
+python -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+python main.py
+```
 
+## ☁️ Heroku Deploy
+```bash
+heroku create your-app-name
+heroku config:set API_ID=... API_HASH=... BOT_TOKEN=... STRING_SESSION=...
+heroku config:set OPENAI_API_KEY=... AI_MODEL=gpt-4.1-mini AI_IMAGE_MODEL=gpt-image-1
+git push heroku main
+```
 
+## ✅ Important Setup
+1. Assistant account (`STRING_SESSION`) group me add karo.
+2. Assistant ko VC join permission/admin do.
+3. Voice chat start karo.
+4. `/play` + `/ai` test karo.
 
-
-<h3 align="center">
-    ─「 sᴜᴩᴩᴏʀᴛ 」─
-</h3>
-
-<p align="center">
-<a href="https://t.me/PURVI_SUPPORT"><img src="https://img.shields.io/badge/-Support%20Group-blue.svg?style=for-the-badge&logo=Telegram"></a>
-</p>
-
-<p align="center">
-<a href="(https://t.me/https://t.me/PURVI_UPDATES"><img src="https://img.shields.io/badge/-Support%20Channel-blue.svg?style=for-the-badge&logo=Telegram"></a>
-</p>
-
-
-- <b> sᴩᴇᴄɪᴀʟ ᴛʜᴀɴᴋs ᴛᴏ [𝖳HE PURVI MUSIC™](https://github.com/TEAMPURVI) ғᴏʀ [𝖳HE PURVI MUSIC™](https://github.com/TEAMPURVI/PURVI_MUSIC) </b>
+Agar chaho next update me mai add kar dunga:
+- Auto-DJ mode (24/7 radio)
+- AI song recommendations based on chat mood
+- Lyrics explain + translation mode
+- Per-group memory + custom AI persona

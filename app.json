@@ -1,94 +1,59 @@
 {
-    "name": "𝐀ʟᴘʜᴀ 𝐒ᴘᴀᴍ.",
-    "logo": "https://telegra.ph/file/e484dc030e63494789be5.jpg",
-    "keywords": [
-        "telegram",
-        "telethon",
-        "telegram-bot",
-        "PythonX",
-        "SpamBots"
-    ],
-    "repository": "https://github.com/TEAMPURVI/ALPHA_SPAM",
-    "env": {
-      "BOT_TOKEN": {
-        "description": "Telegram Bot Token Get This value from https://t.me/BotFather",
-        "value": "",
-        "required": true
-      },
-      "BOT_TOKEN2": {
-        "description": "Telegram Bot Token Get This value from https://t.me/BotFather",
-        "value": "",
-        "required": true
-      },
-      "BOT_TOKEN3": {
-        "description": "Telegram Bot Token Get This value from https://t.me/BotFather",
-        "value": "",
-        "required": true
-      },
-      "BOT_TOKEN4": {
-        "description": "Telegram Bot Token Get This value from https://t.me/BotFather",
-        "value": "",
-        "required": true
-      },
-      "BOT_TOKEN5": {
-        "description": "Telegram Bot Token Get This value from https://t.me/BotFather",
-        "value": "",
-        "required": true
-      },
-      "BOT_TOKEN6": {
-        "description": "Telegram Bot Token Get This value from https://t.me/BotFather",
-        "value": "",
-        "required": true
-      },
-      "BOT_TOKEN7": {
-        "description": "Telegram Bot Token Get This value from https://t.me/BotFather",
-        "value": "",
-        "required": true
-      },
-      "BOT_TOKEN8": {
-        "description": "Telegram Bot Token Get This value from https://t.me/BotFather",
-        "value": "",
-        "required": true
-      },
-      "BOT_TOKEN9": {
-        "description": "Telegram Bot Token Get This value from https://t.me/BotFather",
-        "value": "",
-        "required": true
-      },
-      "BOT_TOKEN10": {
-        "description": "Telegram Bot Token Get This value from https://t.me/BotFather",
-        "value": "",
-        "required": true
-      },
-      "CMD_HNDLR": {
-        "description": "Custom command handler.",
-        "value": ".",
-        "required": false
-      },
-      "SUDO_USERS": {
-        "description": "Sudo users id space by space",
-        "value": "",
-        "required": false
-      },
-      "OWNER_ID": {
-        "description": "Owner Id",
-        "value": "",
-        "required": true
-      },
-      "HEROKU_API_KEY": {
-        "description": "Your Heroku api key to update your bot",
-        "value": "",
-        "required": false 
-      },
-      "HEROKU_APP_NAME": {
-        "description": "Your app name to Update your bot",
-        "value": "",
-        "required": false  
-      }
+  "name": "Telegram Music Bot",
+  "description": "Simple Telegram VC Music Bot (Pyrogram + PyTgCalls)",
+  "logo": "https://raw.githubusercontent.com/heroku/node-js-getting-started/main/public/node.svg",
+  "keywords": [
+    "telegram",
+    "music",
+    "pyrogram",
+    "pytgcalls",
+    "heroku"
+  ],
+  "repository": "https://github.com/yourusername/your-music-bot",
+  "env": {
+    "API_ID": {
+      "description": "Telegram API_ID",
+      "required": true
     },
+    "API_HASH": {
+      "description": "Telegram API_HASH",
+      "required": true
+    },
+    "BOT_TOKEN": {
+      "description": "Bot token from @BotFather",
+      "required": true
+    },
+    "STRING_SESSION": {
+      "description": "Assistant account string session",
+      "required": true
+    },
+    "SUDO_USERS": {
+      "description": "Space-separated user IDs",
+      "required": false
+    },
+    "COMMAND_PREFIXES": {
+      "description": "Prefixes e.g. / ! .",
+      "required": false,
+      "value": "/ ! ."
+    },
+    "OPENAI_API_KEY": {
+      "description": "OpenAI API key for AI commands",
+      "required": false
+    },
+    "AI_MODEL": {
+      "description": "Chat model id",
+      "required": false,
+      "value": "gpt-4.1-mini"
+    },
+    "AI_IMAGE_MODEL": {
+      "description": "Image model id",
+      "required": false,
+      "value": "gpt-image-1"
+    }
+  },
   "buildpacks": [
-        {
-            "url": "heroku/python"
-        }
-    ]
+    {
+      "url": "heroku/python"
+    }
+  ]
 }

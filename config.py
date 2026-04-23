@@ -1,48 +1,40 @@
-import logging
-
-from telethon import TelegramClient
-
-from os import getenv
-from RAUSHAN.data import ALTRON
+import os
+from dataclasses import dataclass
 
 
-logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s', level=logging.WARNING)
+def _as_list(value: str) -> list[int]:
+    if not value.strip():
+        return []
+    return [int(x) for x in value.replace(',', ' ').split()]
 
 
-# VALUES REQUIRED FOR XBOTS
-API_ID = "21803165"
-API_HASH = "05e5e695feb30e25bef47484cc006da7"
-CMD_HNDLR = getenv("CMD_HNDLR", default=".")
-HEROKU_APP_NAME = getenv("HEROKU_APP_NAME", None)
-HEROKU_API_KEY = getenv("HEROKU_API_KEY", "cb2147ff-d743-49fc-a18e-6a40aec75e77")
-
-BOT_TOKEN = getenv("BOT_TOKEN", default=None)
-BOT_TOKEN2 = getenv("BOT_TOKEN2", default=None)
-BOT_TOKEN3 = getenv("BOT_TOKEN3", default=None)
-BOT_TOKEN4 = getenv("BOT_TOKEN4", default=None)
-BOT_TOKEN5 = getenv("BOT_TOKEN5", default=None)
-BOT_TOKEN6 = getenv("BOT_TOKEN6", default=None)
-BOT_TOKEN7 = getenv("BOT_TOKEN7", default=None)
-BOT_TOKEN8 = getenv("BOT_TOKEN8", default=None)
-BOT_TOKEN9 = getenv("BOT_TOKEN9", default=None)
-BOT_TOKEN10 = getenv("BOT_TOKEN10", default=None)
-
-SUDO_USERS = list(map(lambda x: int(x), getenv("SUDO_USERS", default="7403621976").split()))
-for x in ALTRON:
-    SUDO_USERS.append(x)
-OWNER_ID = int(getenv("OWNER_ID", default="7403621976"))
-SUDO_USERS.append(OWNER_ID)
+@dataclass(frozen=True)
+class Config:
+    api_id: int
+    api_hash: str
+    bot_token: str
+    string_session: str
+    sudo_users: list[int]
+    command_prefixes: list[str]
+    openai_api_key: str
+    ai_model: str
+    ai_image_model: str
 
 
-# ------------- CLIENTS -------------
+config = Config(
+    api_id=int(os.getenv("API_ID", "0")),
+    api_hash=os.getenv("API_HASH", ""),
+    bot_token=os.getenv("BOT_TOKEN", ""),
+    string_session=os.getenv("STRING_SESSION", ""),
+    sudo_users=_as_list(os.getenv("SUDO_USERS", "")),
+    command_prefixes=os.getenv("COMMAND_PREFIXES", "/ ! .").split(),
+    openai_api_key=os.getenv("OPENAI_API_KEY", ""),
+    ai_model=os.getenv("AI_MODEL", "gpt-4.1-mini"),
+    ai_image_model=os.getenv("AI_IMAGE_MODEL", "gpt-image-1"),
+)
 
-X1 = TelegramClient('X1', API_ID, API_HASH).start(bot_token=BOT_TOKEN)
-X2 = TelegramClient('X2', API_ID, API_HASH).start(bot_token=BOT_TOKEN2)
-X3 = TelegramClient('X3', API_ID, API_HASH).start(bot_token=BOT_TOKEN3)
-X4 = TelegramClient('X4', API_ID, API_HASH).start(bot_token=BOT_TOKEN4)
-X5 = TelegramClient('X5', API_ID, API_HASH).start(bot_token=BOT_TOKEN5)
-X6 = TelegramClient('X6', API_ID, API_HASH).start(bot_token=BOT_TOKEN6)
-X7 = TelegramClient('X7', API_ID, API_HASH).start(bot_token=BOT_TOKEN7)
-X8 = TelegramClient('X8', API_ID, API_HASH).start(bot_token=BOT_TOKEN8)
-X9 = TelegramClient('X9', API_ID, API_HASH).start(bot_token=BOT_TOKEN9)
-X10 = TelegramClient('X10', API_ID, API_HASH).start(bot_token=BOT_TOKEN10)
+
+if not all([config.api_id, config.api_hash, config.bot_token, config.string_session]):
+    raise RuntimeError(
+        "Missing required env vars. Set API_ID, API_HASH, BOT_TOKEN, STRING_SESSION."
+    )
